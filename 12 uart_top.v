@@ -148,3 +148,19 @@ module uart_top (
     );
 
 endmodule
+Order of Instantiation:
+1. baud_gen           → Clock source for all modules
+                         
+TX Section (2-5):      → Data flows: FSM → Parity → PISO → TX Driver
+2. tx_fsm             
+3. parity_generator   
+4. piso (TX)          
+5. uart_tx            
+                         
+RX Section (6-11):     → Data flows: Start Detect → SIPO → Parity → Stop Detect → Frame Ctrl
+6. start_bit_detector 
+7. sipo (RX)          
+8. parity_checker     
+9. stop_bit_detector  
+10. rx_frame          
+11. uart_rx           
